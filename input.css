@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+      font-family: harry-p;
+      src: url(/fonts/HARRYP__.TTF);
+    }
+}
