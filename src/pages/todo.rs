@@ -1,5 +1,6 @@
 #![allow(non_snake_case)]
 use dioxus::prelude::*;
+// use dioxus_logger::tracing;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Todo {
@@ -40,7 +41,7 @@ pub fn TodoList() -> Element {
             div {
                 class: "w-full",
                 {
-                    todos.cloned().iter().enumerate().map(|(i, todo)| rsx! {
+                    todos.iter().enumerate().map(|(i, todo)| rsx! {
                         div {
                             class: "bg-base-200 m-3 flex justify-between items-center rounded-lg",
                             div {
@@ -52,7 +53,6 @@ pub fn TodoList() -> Element {
                                 div {
                                     class: "collapse-title text-xl font-medium",
                                     div {
-                                        class: "form-control",
                                         label {
                                             class: "label cursor-pointer",
                                             span {
@@ -69,16 +69,22 @@ pub fn TodoList() -> Element {
                                     }
                                 }
                             }
-                            input {
-                                r#type: "checkbox",
-                                checked: "{todo.completed}",
-                                class: "checkbox m-3",
+                            div {
+                                class: "form-control",
                                 onclick: move |_| {
                                     let mut todolist = todos.cloned();
                                     let mut todo = todolist.remove(i);
                                     todo.completed = !todo.completed;
                                     todolist.insert(i, todo);
                                     todos.set(todolist);
+                                },
+                                label {
+                                    class: "label cursor-pointer",
+                                    input {
+                                        r#type: "checkbox",
+                                        checked: "{todo.completed}",
+                                        class: "checkbox m-3",
+                                    }
                                 }
                             }
                         }
